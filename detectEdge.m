@@ -1,7 +1,7 @@
-function edgeImage = detectEdge(image, type)
+function edgeImage = detectEdge(image, type, useThreshold)
     image = im2gray(image);
     if type == "canny"
-        edgeImage = edge(image, "canny");
+        edgeImage = edge(image, 'canny');
         return
     end
 
@@ -9,14 +9,18 @@ function edgeImage = detectEdge(image, type)
     switch type
         case 'laplace'
             mask = [0 1 0; 1 -4 1; 0 1 0];
-            edgeImage = conv2(image, mask);
+            edgeImage = conv2(image, mask, 'same');
         case 'log'
-            mask = fspecial("log");
-            edgeImage = conv2(image, mask);
+            mask = fspecial('log');
+            edgeImage = conv2(image, mask, 'same');
         case {'sobel', 'prewitt', 'roberts'}
             edgeImage = doGradientBasedEdgeDetection(image, type);
     end
     edgeImage = uint8(edgeImage);
+
+    if useThreshold
+        edgeImage = im2double(edgeImage) > graythresh(edgeImage);
+    end
 end
 
 function edgeImage = doGradientBasedEdgeDetection(image, type)
