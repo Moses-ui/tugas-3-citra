@@ -1,4 +1,4 @@
-function edgeImage = detectEdge(image, type, useThreshold)
+function edgeImage = detectEdge(image, type)
     image = im2gray(image);
     if type == "canny"
         edgeImage = edge(image, 'canny');
@@ -17,10 +17,7 @@ function edgeImage = detectEdge(image, type, useThreshold)
             edgeImage = doGradientBasedEdgeDetection(image, type);
     end
     edgeImage = uint8(edgeImage);
-
-    if useThreshold
-        edgeImage = im2double(edgeImage) > graythresh(edgeImage);
-    end
+    edgeImage = im2double(edgeImage) > graythresh(edgeImage);
 end
 
 function edgeImage = doGradientBasedEdgeDetection(image, type)
