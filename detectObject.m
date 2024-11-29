@@ -1,4 +1,4 @@
-function detectedObjects = detectObject(edgeImage)
+function detectedObjects = detectObject(edgeImage, image)
     % Measure properties for each object (connected component) in an image
     % properties: "Area", "Centroid", and "BoundingBox"
     % https://www.mathworks.com/help/images/ref/regionprops.html
@@ -16,4 +16,7 @@ function detectedObjects = detectObject(edgeImage)
         % Create box for object
         detectedObjects(bbox(2):bbox(2)+bbox(4), bbox(1):bbox(1)+bbox(3)) = 1; 
     end
+
+    % Display the object in original image
+    detectedObjects = uint8(detectedObjects .* double(image));
 end
