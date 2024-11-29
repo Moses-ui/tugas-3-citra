@@ -7,8 +7,10 @@
 %     figure; imshow(edgeImage);
 % end
 
-imagePath = "images\banana.jpeg";
+imagePath = "images\something-something.jpg";
 image = imread(imagePath);
 edgeImage = detectEdge(image, "sobel", true);
-parameter = houghTransform(edgeImage, 1000, 10);
-% imshow(parameter);
+parameter = houghTransform(edgeImage, 1000, 500);
+parameter = parameter > graythresh(parameter);
+houghImage = inverseHough(edgeImage, parameter);
+imshow(houghImage);
