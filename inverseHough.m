@@ -19,7 +19,7 @@ function image = inverseHough(edge, parameter)
                     if sin(i) == 0
                         y = y + 1;
                     else
-                        y = (r - i * cos(k))/sin(k);
+                        y = (r - k * cos(i))/sin(i);
                     end
                     y = y + 1;
                     l = floor(y);
