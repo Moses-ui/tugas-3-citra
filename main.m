@@ -1,6 +1,9 @@
-imagePath = "images\coins.bmp";
+imagePath = "images\road.jpg";
 image = imread(imagePath);
 edgeImage = detectEdge(image, "canny");
-detectedObjects = detectObject(edgeImage, image);
-figure; imshow(image);
-figure; imshow(detectedObjects);
+[parameter, theta, rho] = houghTransform(edgeImage, 50, 50);
+% detectedLines = detectLines(edgeImage);
+
+% detectedObjects = detectObject(edgeImage, image);
+% figure; imshow(image);
+% figure; imshow(detectedObjects);
