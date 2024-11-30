@@ -1,7 +1,7 @@
-function detectLines(image, useInBuilt)
+function detectLines(image, useInBuilt, type, axesHandle)
     % https://www.mathworks.com/help/images/ref/houghlines.html
     % Create Hough transform using edge image
-    edgeImage = detectEdge(image, 'canny');
+    edgeImage = detectEdge(image, type);
     if useInBuilt
         houghFn = @hough;
     else
@@ -14,15 +14,29 @@ function detectLines(image, useInBuilt)
 
     % Fine lines and plot them
     lines = houghlines(edgeImage, T, R, P);
-    figure, imshow(image), hold on
+
+    if nargin < 4
+        imshow(image), hold on
+    else
+        imshow(image, 'Parent', axesHandle), hold(axesHandle, "on")
+    end
+
     for k = 1:length(lines)
         % Extract line endpoints
         xy = [lines(k).point1; lines(k).point2];
         
         % Plot line segments
-        plot(xy(:,1), xy(:,2), 'LineWidth', 2, 'Color', 'r');
+        if nargin < 4
+            plot(xy(:,1), xy(:,2), 'LineWidth', 2, 'Color', 'r');
+        else
+            plot(axesHandle, xy(:,1), xy(:,2), 'LineWidth', 2, 'Color', 'r');
+        end
+        
     end
-    
-    title('Detected Road Lines')
-    hold off
+
+    if nargin < 4
+        hold off
+    else
+        hold(axesHandle, "off")
+    end
 end
