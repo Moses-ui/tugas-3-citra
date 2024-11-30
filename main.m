@@ -1,4 +1,4 @@
-imagePath = "images\road4.jpg";
+imagePath = "images\road.jpg";
 image = imread(imagePath);
 % edgeImage = detectEdge(image, "canny");
-detectLines(image);
+detectLines(image, true);
